@@ -27,30 +27,35 @@ export default OptionList = ({ navigation }) => {
       name: 'Dispositivos',
       //image: 'https://img.icons8.com/external-phatplus-lineal-phatplus/64/external-robot-android-phatplus-lineal-phatplus-3.png',
       subtext: "Procure por dispositivos na sua área",
+      page: 'List',
     },
     {
       id: 2,
       name: 'Tutorial',
       //image: 'https://img.icons8.com/external-phatplus-lineal-color-phatplus/64/000000/external-robot-android-phatplus-lineal-color-phatplus-4.png',
       subtext: "Aprenda a utilizar e \n a conectar seus dispositivos",
+      page: 'List',
     },
     {
       id: 3,
       name: 'Encomende o seu',
       //image: 'https://img.icons8.com/external-phatplus-lineal-phatplus/64/external-robot-android-phatplus-lineal-phatplus-5.png',
       subtext: "Encomende um RoPE hoje mesmo",
+      page: 'List',
     },
     {
       id: 4,
       name: 'Sobre',
       //image: 'https://img.icons8.com/external-phatplus-lineal-phatplus/64/external-robot-android-phatplus-lineal-phatplus.png',
       subtext: "Informações adicionais",
+      page: 'List',
     },
     {
       id: 5,
       name: 'Problemas',
       //image: 'https://img.icons8.com/external-phatplus-lineal-phatplus/64/external-robot-android-phatplus-lineal-phatplus-5.png',
       subtext: "Solucionamento de problemas \n e FAQ",
+      page: 'List',
     },
   ]
 
@@ -58,7 +63,7 @@ export default OptionList = ({ navigation }) => {
 
   const clickEventListener = item => {
     //Alert.alert('Message', 'Item clicked. ' + item.name)
-    navigation.navigate('List');
+    navigation.navigate(item.page);
   }
 
   return (

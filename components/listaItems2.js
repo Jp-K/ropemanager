@@ -15,13 +15,36 @@ import {
 export default UserListView = () => {
   
   const data = [
-    { id: 1, image: 'https://bootdey.com/img/Content/avatar/avatar1.png' },
-    { id: 2, image: 'https://bootdey.com/img/Content/avatar/avatar6.png' },
-    { id: 3, image: 'https://bootdey.com/img/Content/avatar/avatar2.png' },
-    { id: 4, image: 'https://bootdey.com/img/Content/avatar/avatar3.png' },
-    { id: 5, image: 'https://bootdey.com/img/Content/avatar/avatar4.png' },
-    { id: 6, image: 'https://bootdey.com/img/Content/avatar/avatar5.png' },
-    { id: 7, image: 'https://bootdey.com/img/Content/avatar/avatar7.png' },
+    { 
+      id: 1, 
+      image: 'https://bootdey.com/img/Content/avatar/avatar1.png',
+      title: 'Rope 1',
+      description: 'Version 1.0',
+    },
+    { 
+      id: 2, 
+      image: 'https://bootdey.com/img/Content/avatar/avatar2.png',
+      title: 'Rope 2',
+      description: 'Version 1.1',
+    },
+    { 
+      id: 3, 
+      image: 'https://bootdey.com/img/Content/avatar/avatar3.png',
+      title: 'Rope 3',
+      description: 'Version 1.0',
+    },
+    { 
+      id: 4, 
+      image: 'https://bootdey.com/img/Content/avatar/avatar4.png',
+      title: 'Rope 4',
+      description: 'Version 1.0',
+    },
+    { 
+      id: 5, 
+      image: 'https://bootdey.com/img/Content/avatar/avatar5.png',
+      title: 'Rope 5',
+      description: 'Version 1.0',
+    },
   ]
   
   const [users, setUsers] = useState(data)
@@ -38,8 +61,8 @@ export default UserListView = () => {
           <View style={styles.box}>
             <Image style={styles.image} source={{ uri: item.image }} />
             <View style={styles.boxContent}>
-              <Text style={styles.title}>Title</Text>
-              <Text style={styles.description}>Lorem ipsum dolor sit amet, elit consectetur</Text>
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.description}>{item.description}</Text>
               <View style={styles.buttons}>
                 <TouchableOpacity
                   style={[styles.button, styles.view]}
