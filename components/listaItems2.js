@@ -1,6 +1,6 @@
 /* This file has been downloaded from rnexamples.com */
 /* If You want to help us please go here https://www.rnexamples.com/help-us */
-import React, {  useState } from 'react'
+import React, {  useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,10 +9,70 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
-} from 'react-native'
+  PermissionsAndroid,
+  Platform
+} from 'react-native';
+import { BleManager } from 'react-native-ble-plx';
 
 
 export default UserListView = () => {
+
+  useEffect(() => {
+      const manager = new BleManager();
+
+      const checkBluetoothPermission = async () => {
+        if (Platform.OS === 'android') {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Permissão Bluetooth',
+              message:
+                'O aplicativo precisa de permissão para acessar a localização para encontrar dispositivos Bluetooth.',
+              buttonNeutral: 'Pergunte-me depois',
+              buttonNegative: 'Cancelar',
+              buttonPositive: 'OK',
+            }
+          );
+
+          if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+            console.error('Permissão Bluetooth não concedida.');
+            return;
+          }
+        } else if (Platform.OS === 'ios') {
+          const bluetoothPermission = await manager.checkState('bluetooth');
+
+          if (bluetoothPermission !== 'PoweredOn') {
+            Alert.alert(
+              'Permissão Bluetooth',
+              'Por favor, ative o Bluetooth para encontrar dispositivos.',
+              [
+                { text: 'OK', onPress: () => console.log('OK Pressed') },
+              ],
+              { cancelable: false }
+            );
+            return;
+          }
+        }
+
+        manager.onStateChange((state) => {
+          if (state === 'PoweredOn') {
+            manager.startDeviceScan(null, null, (error, device) => {
+              if (error) {
+                console.error(error);
+                return;
+              }
+              console.log('Device found:', device.id, device.name);
+            });
+          }
+        }, true);
+      };
+
+      checkBluetoothPermission();
+
+      return () => {
+        manager.destroy();
+      };
+    }, []);
   
   const data = [
     { 
