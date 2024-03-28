@@ -14,11 +14,70 @@ import {
 } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 
+import base64 from 'react-native-base64'
+
+const serviceUUIDRoPE = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+const characteristicUUIDRoPE = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
+const CHARACTERISTIC_SSID_UUID = "6820d2bc-3510-47ce-a233-f9def48b718e";
+const CHARACTERISTIC_PASSWORD_UUID = "44c5b623-f69f-42d7-a14e-ae644ebe8e4d";
 
 export default UserListView = () => {
 
+  const [devices, setDevices] = useState([]);
+  const [manager] = useState(new BleManager());
+
+  const connectToDevice = (device) => {
+    return device
+      .connect()
+      .then((device) => {
+        //setDeviceID(device.id);
+        //setConnectionStatus("Connected");
+        //deviceRef.current = device;
+        return device.discoverAllServicesAndCharacteristics();
+      })
+      .then((device) => {
+        return device.services();
+      })
+      .then((services) => {
+        let service = services.find((service) => service.uuid === serviceUUIDRoPE);
+        return service.characteristics();
+      })
+      .then(async (characteristics) => {
+        console.log(characteristics);
+        let confirmCharacteristic = characteristics.find(
+          (char) => char.uuid === characteristicUUIDRoPE
+        );
+
+        let ssidCharacteristic = characteristics.find(
+          (char) => char.uuid === CHARACTERISTIC_SSID_UUID
+        );
+
+        let passwordCharacteristic = characteristics.find(
+          (char) => char.uuid === CHARACTERISTIC_PASSWORD_UUID
+        );
+
+        var encoded = base64.encode("ssid novo");
+        await ssidCharacteristic.writeWithoutResponse(encoded);
+
+        var encoded = base64.encode("senha nova");
+        await passwordCharacteristic.writeWithoutResponse(encoded);
+
+        var encoded = base64.encode("A");
+        await confirmCharacteristic.writeWithoutResponse(encoded);
+        // writeWithoutResponse
+      })
+      .catch((error) => {
+        console.log(error);
+        setConnectionStatus("Error in Connection");
+      });
+  };
+
+
+  const onPressedItem = (item) => {
+    connectToDevice(item);
+  }
+
   useEffect(() => {
-      const manager = new BleManager();
 
       const checkBluetoothPermission = async () => {
         if (Platform.OS === 'android') {
@@ -61,7 +120,24 @@ export default UserListView = () => {
                 console.error(error);
                 return;
               }
-              console.log('Device found:', device.id, device.name);
+              if (device.serviceUUIDs) {
+                if (device.serviceUUIDs.includes('4fafc201-1fb5-459e-8fcc-c5c9c331914b')) {
+                  if (!devices.some(el => el.id === device.id)) {
+                    setDevices(prevDevices => {
+                      if (prevDevices.some(prevDevice => prevDevice.id === device.id)) {
+                        return prevDevices.map(prevDevice => {
+                          if (prevDevice.id === device.id) {
+                            return device;
+                          }
+                          return prevDevice;
+                        });
+                      }
+                      return [...prevDevices, device];
+                    });
+                  }
+                }
+              }
+
             });
           }
         }, true);
@@ -106,27 +182,26 @@ export default UserListView = () => {
       description: 'Version 1.0',
     },
   ]
-  
-  const [users, setUsers] = useState(data)
+  const [users, setUsers] = useState(data);
 
   showAlert = () => Alert.alert('Alert', 'Button pressed ' )
-
+  //console.log(devices)
   return (
     <FlatList
       enableEmptySections={true}
-      data={users}
+      data={devices}
       keyExtractor={item => item.id}
       renderItem={({ item }) => {
         return (
           <View style={styles.box}>
-            <Image style={styles.image} source={{ uri: item.image }} />
+            <Image style={styles.image} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar5.png' }} />
             <View style={styles.boxContent}>
-              <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.description}>{item.description}</Text>
+              <Text style={styles.title}>{item.name}</Text>
+              <Text style={styles.description}>{item.id}</Text>
               <View style={styles.buttons}>
                 <TouchableOpacity
                   style={[styles.button, styles.view]}
-                  onPress={showAlert}>
+                  onPress={() => onPressedItem(item)}>
                   <Image
                     style={styles.icon}
                     source={{ uri: 'https://img.icons8.com/color/70/000000/filled-like.png' }}
@@ -135,7 +210,7 @@ export default UserListView = () => {
 
                 <TouchableOpacity
                   style={[styles.button, styles.profile]}
-                  onPress={showAlert}>
+                  onPress={() => onPressedItem(item)}>
                   <Image
                     style={styles.icon}
                     source={{ uri: 'https://img.icons8.com/color/70/000000/cottage.png' }}
@@ -144,7 +219,7 @@ export default UserListView = () => {
 
                 <TouchableOpacity
                   style={[styles.button, styles.message]}
-                  onPress={showAlert}>
+                  onPress={() => onPressedItem(item)}>
                   <Image
                     style={styles.icon}
                     source={{ uri: 'https://img.icons8.com/color/70/000000/plus.png' }}
