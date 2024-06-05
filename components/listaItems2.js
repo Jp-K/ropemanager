@@ -194,9 +194,11 @@ export default UserListView = () => {
       renderItem={({ item }) => {
         return (
           <View style={styles.box}>
-            <Image style={styles.image} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar5.png' }} />
+            <Image style={styles.image} source={{ uri: 'https://img.icons8.com/external-phatplus-lineal-color-phatplus/64/external-robot-android-phatplus-lineal-color-phatplus-6.png' }} />
             <View style={styles.boxContent}>
               <Text style={styles.title}>{item.name}</Text>
+              <Text style={styles.description}>Bateria: 90%</Text>
+              <Text style={styles.description}>Versão: 1.0</Text>
               <Text style={styles.description}>{item.id}</Text>
               <View style={styles.buttons}>
                 <TouchableOpacity
@@ -208,14 +210,14 @@ export default UserListView = () => {
                   />
                 </TouchableOpacity>
 
-                <TouchableOpacity
+                {/*<TouchableOpacity
                   style={[styles.button, styles.profile]}
                   onPress={() => onPressedItem(item)}>
                   <Image
                     style={styles.icon}
                     source={{ uri: 'https://img.icons8.com/color/70/000000/cottage.png' }}
                   />
-                </TouchableOpacity>
+                </TouchableOpacity>*/}
 
                 <TouchableOpacity
                   style={[styles.button, styles.message]}

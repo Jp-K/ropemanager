@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, Alert } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, Alert, Linking } from 'react-native'
 
 const images = [
   {
@@ -34,28 +34,30 @@ export default OptionList = ({ navigation }) => {
       name: 'Tutorial',
       //image: 'https://img.icons8.com/external-phatplus-lineal-color-phatplus/64/000000/external-robot-android-phatplus-lineal-color-phatplus-4.png',
       subtext: "Aprenda a utilizar e \n a conectar seus dispositivos",
-      page: 'List',
+      page: 'Tutorial',
     },
     {
       id: 3,
       name: 'Encomende o seu',
       //image: 'https://img.icons8.com/external-phatplus-lineal-phatplus/64/external-robot-android-phatplus-lineal-phatplus-5.png',
       subtext: "Encomende um RoPE hoje mesmo",
-      page: 'List',
+      //link: 'https://smartfunbrasil.com/#kits',
+      page: 'Buttons'
     },
     {
       id: 4,
       name: 'Sobre',
       //image: 'https://img.icons8.com/external-phatplus-lineal-phatplus/64/external-robot-android-phatplus-lineal-phatplus.png',
       subtext: "Informações adicionais",
-      page: 'List',
+      //link: 'https://smartfunbrasil.com/',
+      page: 'Controller'
     },
     {
       id: 5,
       name: 'Problemas',
       //image: 'https://img.icons8.com/external-phatplus-lineal-phatplus/64/external-robot-android-phatplus-lineal-phatplus-5.png',
       subtext: "Solucionamento de problemas \n e FAQ",
-      page: 'List',
+      link: 'https://api.whatsapp.com/send?phone=5547984031153&text=Ol%C3%A1%20estou%20com%20problemas%20sobre%20o%20RoPE',
     },
   ]
 
@@ -63,7 +65,11 @@ export default OptionList = ({ navigation }) => {
 
   const clickEventListener = item => {
     //Alert.alert('Message', 'Item clicked. ' + item.name)
-    navigation.navigate(item.page);
+    if (item.link) {
+      Linking.openURL(item.link);
+    } else {
+      navigation.navigate(item.page);
+    }
   }
 
   return (
@@ -85,7 +91,6 @@ export default OptionList = ({ navigation }) => {
                 <TouchableOpacity
                   style={styles.followButton}
                   onPress={() => clickEventListener(item)}>
-                  <Text style={styles.followButtonText}>Explore now</Text>
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
@@ -154,7 +159,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 30,
     backgroundColor: 'white',
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: '#dcdcdc',
   },
   followButtonText: {

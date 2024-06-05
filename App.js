@@ -5,6 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //import ProfileCards from './components/listaItems';
 import OptionList from './components/Home';
 import UserListView from './components/listaItems2';
+import Carousel from './components/tutorialConnect';
+import Controller from './components/Controller';
+import Buttons from './components/Buttons';
 /*
 function HomeScreen() {
   return (
@@ -22,7 +25,7 @@ function ListScreen() {
       <StatusBar style="auto" />
     </View>
   );
-}*/
+}*/ 
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +35,9 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={OptionList} />
         <Stack.Screen name="List" component={UserListView} />
+        <Stack.Screen name="Tutorial" component={Carousel} />
+        <Stack.Screen name="Controller" component={Controller} />
+        <Stack.Screen name="Buttons" component={Buttons} />
       </Stack.Navigator>
     </NavigationContainer>
   );
