@@ -2,31 +2,48 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const {width, height} = Dimensions.get('window');
+import base64 from 'react-native-base64'
 
-
-export default Controller = () => {
+export default Controller = ({ route }) => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const { confirmCharacteristic, ssidCharacteristic, passwordCharacteristic } = route.params;
 
-    const clickEventListener = item => {
+    const clickEventListener = async item => {
         console.log(item);
+        try {
+          // Enviar SSID
+          const encodedSSID = base64.encode("ssid novo");
+          await ssidCharacteristic.writeWithoutResponse(encodedSSID);
+    
+          // Enviar Senha
+          const encodedPassword = base64.encode("senha nova");
+          await passwordCharacteristic.writeWithoutResponse(encodedPassword);
+    
+          // Confirmar
+          const encodedConfirm = base64.encode(item);
+          await confirmCharacteristic.writeWithoutResponse(encodedConfirm);
+    
+        } catch (error) {
+          console.error(error);
+        }
       }
 
     return (
         <View style={styles.container}>
             <View style={styles.crossCenter}>
-                <TouchableOpacity style={[styles.button, styles.buttonA, styles.crossTop]} onPress={() => clickEventListener('UP')}>
+                <TouchableOpacity style={[styles.button, styles.buttonA, styles.crossTop]} onPress={() => clickEventListener('F')}>
                     <Icon name="arrow-upward" style={styles.arrow} />
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.buttonB, styles.crossBottom]} onPress={() => clickEventListener('BOTTOM')}>
+                <TouchableOpacity style={[styles.button, styles.buttonB, styles.crossBottom]} onPress={() => clickEventListener('G')}>
                     <Icon name="arrow-downward" style={styles.arrow} />
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.buttonX, styles.crossRight]} onPress={() => clickEventListener('RIGHT')}>
+                <TouchableOpacity style={[styles.button, styles.buttonX, styles.crossRight]} onPress={() => clickEventListener('R')}>
                     <Icon name="arrow-forward" style={styles.arrow} />
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.buttonY, styles.crossLeft]} onPress={() => clickEventListener('LEFT')}>
+                <TouchableOpacity style={[styles.button, styles.buttonY, styles.crossLeft]} onPress={() => clickEventListener('L')}>
                     <Icon name="arrow-back" style={styles.arrow} />
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.buttonY, styles.crossCircle]} onPress={() => clickEventListener('CENTER')}>
+                <TouchableOpacity style={[styles.button, styles.buttonY, styles.crossCircle]} onPress={() => clickEventListener('F')}>
                     <Text style={styles.buttonText}>X</Text>
                 </TouchableOpacity>
             </View>

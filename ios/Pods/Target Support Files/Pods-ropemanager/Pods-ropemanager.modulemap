@@ -1,0 +1,6 @@
+module Pods_ropemanager {
+  umbrella header "Pods-ropemanager-umbrella.h"
+
+  export *
+  module * { export * }
+}

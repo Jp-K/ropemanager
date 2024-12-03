@@ -41,16 +41,16 @@ export default OptionList = ({ navigation }) => {
       name: 'Encomende o seu',
       //image: 'https://img.icons8.com/external-phatplus-lineal-phatplus/64/external-robot-android-phatplus-lineal-phatplus-5.png',
       subtext: "Encomende um RoPE hoje mesmo",
-      //link: 'https://smartfunbrasil.com/#kits',
-      page: 'Buttons'
+      link: 'https://smartfunbrasil.com/#kits',
+      //page: 'Buttons'
     },
     {
       id: 4,
       name: 'Sobre',
       //image: 'https://img.icons8.com/external-phatplus-lineal-phatplus/64/external-robot-android-phatplus-lineal-phatplus.png',
       subtext: "Informações adicionais",
-      //link: 'https://smartfunbrasil.com/',
-      page: 'Controller'
+      link: 'https://smartfunbrasil.com/',
+      //page: 'Controller'
     },
     {
       id: 5,

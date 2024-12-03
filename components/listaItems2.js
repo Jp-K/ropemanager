@@ -1,6 +1,7 @@
 /* This file has been downloaded from rnexamples.com */
 /* If You want to help us please go here https://www.rnexamples.com/help-us */
 import React, {  useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
   Text,
@@ -25,6 +26,7 @@ export default UserListView = () => {
 
   const [devices, setDevices] = useState([]);
   const [manager] = useState(new BleManager());
+  const navigation = useNavigation();
 
   const connectToDevice = (device) => {
     return device
@@ -43,7 +45,6 @@ export default UserListView = () => {
         return service.characteristics();
       })
       .then(async (characteristics) => {
-        console.log(characteristics);
         let confirmCharacteristic = characteristics.find(
           (char) => char.uuid === characteristicUUIDRoPE
         );
@@ -56,15 +57,11 @@ export default UserListView = () => {
           (char) => char.uuid === CHARACTERISTIC_PASSWORD_UUID
         );
 
-        var encoded = base64.encode("ssid novo");
-        await ssidCharacteristic.writeWithoutResponse(encoded);
-
-        var encoded = base64.encode("senha nova");
-        await passwordCharacteristic.writeWithoutResponse(encoded);
-
-        var encoded = base64.encode("A");
-        await confirmCharacteristic.writeWithoutResponse(encoded);
-        // writeWithoutResponse
+        navigation.navigate('Controller', {
+          confirmCharacteristic,
+          ssidCharacteristic,
+          passwordCharacteristic,
+        });
       })
       .catch((error) => {
         console.log(error);
