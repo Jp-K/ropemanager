@@ -42,7 +42,7 @@ export default OptionList = ({ navigation }) => {
       //image: 'https://img.icons8.com/external-phatplus-lineal-phatplus/64/external-robot-android-phatplus-lineal-phatplus-5.png',
       subtext: "Encomende um RoPE hoje mesmo",
       link: 'https://smartfunbrasil.com/#kits',
-      //page: 'Buttons'
+      // page: 'Buttons'
     },
     {
       id: 4,

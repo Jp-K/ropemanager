@@ -43,8 +43,9 @@ export default Controller = ({ route }) => {
                 <TouchableOpacity style={[styles.button, styles.buttonY, styles.crossLeft]} onPress={() => clickEventListener('L')}>
                     <Icon name="arrow-back" style={styles.arrow} />
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.buttonY, styles.crossCircle]} onPress={() => clickEventListener('F')}>
-                    <Text style={styles.buttonText}>X</Text>
+                <TouchableOpacity style={[styles.button, styles.crossCircle]} onPress={() => clickEventListener('F')}>
+                    <Icon name="play-arrow" style={styles.arrow} />
+                    {/* <Text style={styles.buttonText}>Play</Text> */}
                 </TouchableOpacity>
             </View>
             <View style={styles.card}>
@@ -130,7 +131,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
     },
     crossCircle: {
-        backgroundColor: '#333333',
+        // backgroundColor: '#333333',
+        backgroundColor: '#00A97A',
         alignItems: 'center',
         justifyContent: 'center',
         position: 'absolute',
@@ -158,7 +160,6 @@ const styles = StyleSheet.create({
         width: '100%',
       },
       button: {
-        backgroundColor: '#BAB9B9',
         borderRadius: 20,
         width: 80,
         height: 80,
@@ -175,16 +176,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#025AC9',
       },
       buttonB: {
-        //backgroundColor: '#FFB930',
-        //backgroundColor: '#025AC9',
-        backgroundColor: '#FFB930',
+        //backgroundColor: '#FF6400',
+        backgroundColor: '#D16002',
       },
       buttonX: {
         //backgroundColor: '#025AC9',
         backgroundColor: '#ED1D29',
       },
       buttonY: {
-        backgroundColor: '#00A97A',
+        backgroundColor: '#FFB930',
       },
       buttonAxes: {
         backgroundColor: '#222',
